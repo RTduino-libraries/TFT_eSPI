@@ -614,7 +614,10 @@ void TFT_eSPI::init(uint8_t tc)
   {
     initBus();
 
-#if !defined (ESP32) && !defined(TFT_PARALLEL_8_BIT) && !defined(ARDUINO_ARCH_RP2040) && !defined (ARDUINO_ARCH_MBED)
+#if defined(ARDUINO_ARCH_RTTHREAD)
+    spi.begin();
+
+#elif !defined (ESP32) && !defined(TFT_PARALLEL_8_BIT) && !defined(ARDUINO_ARCH_RP2040) && !defined (ARDUINO_ARCH_MBED)
   // Legacy bitmasks for GPIO
   #if defined (TFT_CS) && (TFT_CS >= 0)
     cspinmask = (uint32_t) digitalPinToBitMask(TFT_CS);
